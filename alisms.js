@@ -68,7 +68,7 @@ AliSMS.prototype.sendSMS = function (paramString, receiver, method, ssl, format,
         // 添加请求方法
         stringToSign = 'GET&%2F&' + stringEscaped;
         // 使用HMAC-SHA1进行hash计算,并转为base64编码，然后再将特殊字符编码
-        signature = encodeURIComponent(crypto.createHmac('sha1', this.accessKeySecret).update(new Buffer(stringToSign, 'utf8')).digest().toString('base64')).replace('/', '%2F');
+        signature = encodeURIComponent(crypto.createHmac('sha1', this.accessKeySecret + '&').update(new Buffer(stringToSign, 'utf8')).digest().toString('base64')).replace('/', '%2F');
         // 生成请求URL
         var url = baseURL + '?Signature=' + signature + '&' + stringEscapedStep1;
 

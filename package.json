@@ -1,6 +1,6 @@
 {
   "name": "alisms-dx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a repo for Node.js to easy sue aliyun sms service",
   "main": "alisms.js",
   "dependencies": {
