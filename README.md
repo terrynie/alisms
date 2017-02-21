@@ -3,13 +3,13 @@
 
 ####安装
 
-```
+```shell
 $ npm install alisms-dx
 ```
 
 ####使用
 
-```
+```javascript
 var AliSMS = require('alisms-dx');
 // accessKeyId和accessKeySecret在阿里云获取
 // signName是您的【短信签名】名称，templateCode是您的【短信模板】代码
