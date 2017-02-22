@@ -74,21 +74,6 @@ AliSMS.prototype.sendSMS = function (options, callback) {
     var stringToSign = '';
     var signature = '';
 
-    // define callback
-    var cb = function (res) {
-        var data = '';
-        res.on('date', function (chunk) {
-            data += chunk;
-        });
-        res.on('end', function () {
-            callback ? callback(data) : console.log(data);
-
-        });
-        res.on('error', function (err) {
-            callback ? callback(JSON.stringify(err)) : console.log(JSON.stringify(err));
-        });
-    }
-
     if (_method.toLowerCase() === 'get') {
         // 添加请求方法
         stringToSign = 'GET&%2F&' + stringEscaped;
@@ -99,9 +84,27 @@ AliSMS.prototype.sendSMS = function (options, callback) {
         var url = _baseURL + '?Signature=' + signature + '&' + stringEscapedStep1;
 
         if (_ssl) {
-            https.get(url, cb);
+            https.get(url, function (res) {
+                var data = '';
+                res.on('data', function (chunk) {
+                    data += chunk;
+                }).on('end', function () {
+                    callback ? callback(data) : console.log(data);
+                }).on('error', function (err) {
+                    callback ? callback(JSON.stringify(err)) : console.log(err);
+                });
+            });
         } else {
-            http.get(url, cb);
+            http.get(url, function (res) {
+                var data = '';
+                res.on('data', function (chunk) {
+                    data += chunk;
+                }).on('end', function () {
+                    callback ? callback(data) : console.log(data);
+                }).on('error', function (err) {
+                    callback ? callback(JSON.stringify(err)) : console.log(err);
+                });
+            });
         }
     } else if (_method.toLowerCase() === 'post') {
         stringToSign = 'POST&%2F&' + stringEscaped;
@@ -135,9 +138,27 @@ AliSMS.prototype.sendSMS = function (options, callback) {
         };
 
         if (_ssl) {
-            var post_req = https.request(options, cb);
+            var post_req = https.request(options, function (res) {
+                var data = '';
+                res.on('data', function (chunk) {
+                    data += chunk;
+                }).on('end', function () {
+                    callback ? callback(data) : console.log(data);
+                }).on('error', function (err) {
+                    callback ? callback(JSON.stringify(err)) : console.log(err);
+                });
+            });
         } else {
-            var post_req = http.request(options, cb);
+            var post_req = http.request(options, function (res) {
+                var data = '';
+                res.on('data', function (chunk) {
+                    data += chunk;
+                }).on('end', function () {
+                    callback ? callback(data) : console.log(data);
+                }).on('error', function (err) {
+                    callback ? callback(JSON.stringify(err)) : console.log(err);
+                });
+            });
         };
         post_req.write(reqData);
         post_req.end();
